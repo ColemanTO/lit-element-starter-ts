@@ -1,11 +1,108 @@
 <!DOCTYPE html>
-
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Lit Starter Kit</title>
+
+<head>
+  <style>
+    body {
+      --background-color: #12294B;
+      --font-color: #ffffff;
+      --font-size: 56px;
+      --stroke-width: 2px;
+      --stroke-color: #FF6005;
+  
+      height: 100vh;
+      margin: 0;
+    }
+  
+    repeat-pattern {
+      height: 100vh;
+      width: 100vw;
+    }
+  
+    .knobs {
+      background: #efefef;
+      border-bottom-right-radius: 4px;
+      padding: 8px;
+      position: absolute;
+      top: 0;
+    }
+  </style>
+  <script type="module" src="repeat-pattern.js"></script>
+  <script type="module">
+    const body = document.querySelector("body");
+    const pattern = document.querySelector("repeat-pattern");
+
+    function onChars(e) {
+      console.log('Char = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.chars = e.target.value
+    }
+
+    function onNumPrints(e) {
+      console.log('Number = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.numPrints = e.target.valueAsNumber;
+    }
+
+    function onRotationOffset(e) {
+      console.log('Rotation = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.rotationOffset = e.target.valueAsNumber;
+    }
+
+    function onBackgroundColor(e) {
+      console.log('Bkgd = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      body.style.setProperty("--background-color", e.target.value);
+    }
+
+    function onStrokeColor(e) {
+      console.log('Stroke = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      body.style.setProperty("--stroke-color", e.target.value);
+    }
+
+    function onTextColor(e) {
+      console.log('Text = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      body.style.setProperty("--font-color", e.target.value);
+    }
+
+    function onTextSize(e) {
+      console.log('TextSize', e.target.value, 'pt');
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.style.setProperty("--font-size", e.target.value + "pt");
+    }
+
+    const inputs = document.querySelectorAll("input")
+    inputs[0].addEventListener("input", onChars);
+    inputs[1].addEventListener("input", onNumPrints);
+    inputs[2].addEventListener("input", onRotationOffset);
+    inputs[3].addEventListener("input", onBackgroundColor);
+    inputs[4].addEventListener("input", onStrokeColor);
+    inputs[5].addEventListener("input", onTextColor);
+    inputs[6].addEventListener("input", onTextSize);
+  </script>
   </head>
-  <body>
-    <a href="/dev/index.html">Component Demo</a>
+
+<body>
+  <repeat-pattern chars="I" num-prints="8"></repeat-pattern>
+  <div class="knobs">
+    <label for="Char">Char: </label>
+    <input id="Char" value="I">
+    <label>Number: </label>
+    <input type="range" min="2" max="29" value="8">
+    <label>Rotation: </label>
+    <input type="range" min="0" max="360" value="0">
+    <label>Bkgd: </label>
+    <input type="color" value="#12294B">
+    <label>Stroke: </label>
+    <input type="color" value="#FF6005">
+    <label>Text: </label>
+    <input type="color" value="#ffffff">
+    <label>Size: </label>
+    <input type="range" min="12" max="120" value="48">
+  </div>
   </body>
+
 </html>
