@@ -1,23 +1,121 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <title>&lt;my-element&gt; Demo</title>
-  <script type="module" src="../my-element.bundled.js"></script>
+  <meta charset="utf-8">
+  <title>Lit Demo #1</title>
   <style>
-    p {
-      border: solid 1px blue;
+    body {
+      --background-color: #12294B;
+      --font-color: #FF6005;
+      --font-size: 56px;
+      --stroke-width: 2px;
+      --stroke-color: #FFFFFF;
+
+      height: 100vh;
+      margin: 0;
+    }
+
+    repeat-pattern {
+      height: 100vh;
+      width: 100vw;
+    }
+
+    .knobs {
+      background: #efefef;
+      border-bottom-right-radius: 4px;
       padding: 8px;
+      position: absolute;
+      bottom: 0;
     }
   </style>
+  <script type="module" src="repeat-pattern.js"></script>
+  <script type="module">
+    const body = document.querySelector("body");
+    const pattern = document.querySelector("repeat-pattern");
+
+    function onChars(e) {
+      console.log('Char = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.chars = e.target.value
+    }
+
+    function onNumPrints(e) {
+      console.log('Number = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.numPrints = e.target.valueAsNumber;
+    }
+
+    function onRotationOffset(e) {
+      console.log('Rotation = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.rotationOffset = e.target.valueAsNumber;
+    }
+
+    function onBackgroundColor(e) {
+      console.log('Bkgd = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      body.style.setProperty("--background-color", e.target.value);
+    }
+
+    function onStrokeColor(e) {
+      console.log('Stroke Color = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      body.style.setProperty("--stroke-color", e.target.value);
+    }
+
+    function onStrokeWidth(e) {
+      console.log('Stroke Width = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      body.style.setProperty("--stroke-width", e.target.value);
+    }
+
+    function onTextColor(e) {
+      console.log('Text = ', e.target.value);
+      if (!(e.target instanceof HTMLInputElement)) return;
+      body.style.setProperty("--font-color", e.target.value);
+    }
+
+    function onTextSize(e) {
+      console.log('TextSize', e.target.value, 'pt');
+      if (!(e.target instanceof HTMLInputElement)) return;
+      pattern.style.setProperty("--font-size", e.target.value + "pt");
+    }
+
+    const inputs = document.querySelectorAll("input")
+    inputs[0].addEventListener("input", onChars);
+    inputs[1].addEventListener("input", onNumPrints);
+    inputs[2].addEventListener("input", onRotationOffset);
+    inputs[3].addEventListener("input", onBackgroundColor);
+    inputs[4].addEventListener("input", onStrokeColor);
+      inputs[5].addEventListener("input", onStrokeWidth);
+      inputs[6].addEventListener("input", onTextColor);
+      inputs[7].addEventListener("input", onTextSize);
+  </script>
 </head>
 
 <body>
-  <my-element>
-    <p>This is child content</p>
-  </my-element>
+  <repeat-pattern chars="I" num-prints="8"></repeat-pattern>
+  <div class="knobs">
+    <form>
+    <label for="Char">Char: </label>
+    <input id="Char" value="I"><br />
+    <label for="Number">Number: </label>
+    <input id="Number" type="range" min="2" max="29" value="8"><br />
+    <label for="Rotation">Rotation: </label>
+    <input id="Rotation" type="range" min="0" max="360" value="0"><br />
+    <label for="Bkgd">Bkgd: </label>
+    <input id="Bkgd" type="color" value="#12294B"><br />
+    <label for="Stroke">Stroke Color: </label>
+    <input id="Stroke" type="color" value="#FFFFFF"><br />
+    <label for="Weight">Stroke Width: </label>
+    <input id="Weight" type="range" min="0" max="4" value="2"><br />
+    <label for="Text">Font Color: </label>
+    <input id="Text" type="color" value="#FF6005"><br />
+    <label for="Size">Font Size: </label>
+    <input id="Size" type="range" min="12" max="120" value="48">
+    </form>
+  </div>
 </body>
 
 </html>
